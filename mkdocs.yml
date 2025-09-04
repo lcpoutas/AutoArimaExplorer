@@ -1,0 +1,26 @@
+site_name: AutoArimaExplorer Book
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Theory:
+    - Introducción: teoria/introduccion.md
+    - Fundamentos ARIMA: teoria/arima_fundamentos.md
+    - Diagnósticos: teoria/diagnosticos.md
+  - Technical conceps:
+    - General view: tecnica/autoarimaexplorer.md
+    - API (auto): tecnica/api.md
+    - Examples: tecnica/ejemplos.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
