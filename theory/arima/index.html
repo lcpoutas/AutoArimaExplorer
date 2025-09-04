@@ -1,0 +1,2684 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../introduction/">
+      
+      
+        <link rel="next" href="../statistical_conceps/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>ARIMA Fundamentals - AutoArimaExplorer Book</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arima-theory-in-practice" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AutoArimaExplorer Book" class="md-header__button md-logo" aria-label="AutoArimaExplorer Book" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AutoArimaExplorer Book
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ARIMA Fundamentals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AutoArimaExplorer Book" class="md-nav__button md-logo" aria-label="AutoArimaExplorer Book" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AutoArimaExplorer Book
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Theory
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Theory
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    ARIMA Fundamentals
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    ARIMA Fundamentals
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-arma-to-arima-why-differencing-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      From ARMA to ARIMA (why differencing matters)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From ARMA to ARIMA (why differencing matters)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-differencing-does-mathematically-and-intuitively" class="md-nav__link">
+    <span class="md-ellipsis">
+      What differencing does (mathematically and intuitively)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-many-differences-do-we-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      How many differences do we need?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-cost-of-differencing-variance-and-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      The cost of differencing (variance and signal)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#over-differencing-vs-under-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Over-differencing vs under-differencing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-and-deterministic-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift and deterministic components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing-briefly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Seasonal differencing (briefly)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-differencing-interacts-with-p-and-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      How differencing interacts with \(p\) and \(q\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-data-issues-and-what-differencing-cant-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common data issues (and what differencing can’t fix)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-diagnostics-youll-see-in-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical diagnostics you’ll see in this project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bottom-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bottom line
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stationarity-invertibility-the-root-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stationarity &amp; Invertibility (the root picture)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stationarity &amp; Invertibility (the root picture)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-polynomials" class="md-nav__link">
+    <span class="md-ellipsis">
+      The two polynomials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-intuition-with-ar1-and-ma1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick intuition with AR(1) and MA(1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-geometry-what-roots-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      The geometry: what roots “mean”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-roots-near-1-are-troublesome" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why roots near 1 are troublesome
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arima-and-unit-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARIMA and unit roots
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#companion-matrix-view-for-the-linear-algebra-inclined" class="md-nav__link">
+    <span class="md-ellipsis">
+      Companion matrix view (for the linear-algebra inclined)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-diagnostics-safeguards-youll-see" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical diagnostics &amp; safeguards you’ll see
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-patterns-to-recognize" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common patterns to recognize
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-constants-trends-and-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      The role of constants, trends, and drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The role of constants, trends, and drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arma-constants-set-the-long-run-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARMA: constants set the long-run mean
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-arma-to-arima-why-drift-appears" class="md-nav__link">
+    <span class="md-ellipsis">
+      From ARMA to ARIMA: why “drift” appears
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-your-softwares-trend-flag-really-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      What your software’s “trend” flag really means
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-behavior-mean-reversion-vs-linear-growth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecast behavior: mean reversion vs. linear growth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-pitfalls-and-how-to-spot-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common pitfalls and how to spot them
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-decision-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick decision guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forecasts-and-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecasts and uncertainty
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Forecasts and uncertainty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#point-forecasts-via-the-ma-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Point forecasts via the MA(∞) view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-error-variance-why-bands-widen" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecast error variance (why bands widen)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-intervals-pis-vs-confidence-intervals-cis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prediction intervals (PIs) vs. confidence intervals (CIs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-and-long-horizon-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift and long-horizon behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-gaussian-and-heteroskedastic-shocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-Gaussian and heteroskedastic shocks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transforms-and-back-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transforms and back-transforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-arima-works-best" class="md-nav__link">
+    <span class="md-ellipsis">
+      When ARIMA works best
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When ARIMA works best">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-sweet-spot-data-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      The sweet spot (data properties)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-winning-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typical winning use cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signals-arima-is-a-good-idea-quick-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signals ARIMA is a good idea (quick checklist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-arima-is-not-your-first-pick-and-what-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where ARIMA is not your first pick (and what to do)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-edge-cases-and-easy-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical edge cases (and easy fixes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-autoarimaexplorer-exploits-this-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      How AutoArimaExplorer exploits this regime
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-common-data-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations and common data issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations and common data issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-structural-breaks-and-regime-shifts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) Structural breaks and regime shifts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-seasonality-and-calendar-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) Seasonality and calendar effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-heteroskedasticity-time-varying-volatility" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Heteroskedasticity (time-varying volatility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-nonlinearity-and-long-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Nonlinearity and long memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-outliers-and-heavy-tails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Outliers and heavy tails
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-missing-data-and-irregular-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Missing data and irregular sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-over-under-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Over-/under-differencing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-near-nonstationarity-invertibility-unit-root-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Near nonstationarity / invertibility (unit-root edges)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-identifiability-and-multicollinearity-of-lags" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Identifiability and multicollinearity of lags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-exogenous-drivers-omitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      10) Exogenous drivers omitted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-small-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      11) Small samples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-long-horizon-forecasts" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Long-horizon forecasts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-caveats-tooling-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical caveats (tooling &amp; diagnostics)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-autoarimaexplorer-mitigates-these-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      How AutoArimaExplorer mitigates these issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-identification-heuristics-modeling-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical identification heuristics (modeling playbook)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical identification heuristics (modeling playbook)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-sanity-checks-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      0) Sanity checks &amp; cleaning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-first-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) First look
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-make-it-stationary-choose-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) Make it stationary (choose \(d\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-seasonal-structure-if-applicable" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Seasonal structure (if applicable)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-choose-small-candidate-orders-p-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Choose small candidate orders (\(p, q\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-fit-compare-in-sample-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Fit &amp; compare (in-sample guardrails)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cross-validate-out-of-sample-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Cross-validate (out-of-sample reality check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-volatility-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Volatility &amp; intervals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-edgeboundary-situations" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Edge/boundary situations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-checklist-for-good-arima" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Checklist for “good” ARIMA
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-tiny-acfpacf-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      A tiny ACF/PACF cheat-sheet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-looks-like-in-practice-with-autoarimaexplorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      What this looks like in practice with AutoArimaExplorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extensions-you-should-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extensions you should know
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-this-theory-guides-autoarimaexplorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      How this theory guides AutoArimaExplorer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-the-stats-live-and-what-to-read-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where the stats live (and what to read next)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistical_conceps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagnosis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical conceps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical conceps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical_conceps/autoarimaexplorer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    General view
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical_conceps/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API (auto)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical_conceps/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-arma-to-arima-why-differencing-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      From ARMA to ARIMA (why differencing matters)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From ARMA to ARIMA (why differencing matters)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-differencing-does-mathematically-and-intuitively" class="md-nav__link">
+    <span class="md-ellipsis">
+      What differencing does (mathematically and intuitively)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-many-differences-do-we-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      How many differences do we need?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-cost-of-differencing-variance-and-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      The cost of differencing (variance and signal)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#over-differencing-vs-under-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Over-differencing vs under-differencing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-and-deterministic-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift and deterministic components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing-briefly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Seasonal differencing (briefly)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-differencing-interacts-with-p-and-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      How differencing interacts with \(p\) and \(q\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-data-issues-and-what-differencing-cant-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common data issues (and what differencing can’t fix)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-diagnostics-youll-see-in-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical diagnostics you’ll see in this project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bottom-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bottom line
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stationarity-invertibility-the-root-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stationarity &amp; Invertibility (the root picture)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stationarity &amp; Invertibility (the root picture)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-two-polynomials" class="md-nav__link">
+    <span class="md-ellipsis">
+      The two polynomials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-intuition-with-ar1-and-ma1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick intuition with AR(1) and MA(1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-geometry-what-roots-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      The geometry: what roots “mean”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-roots-near-1-are-troublesome" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why roots near 1 are troublesome
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arima-and-unit-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARIMA and unit roots
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#companion-matrix-view-for-the-linear-algebra-inclined" class="md-nav__link">
+    <span class="md-ellipsis">
+      Companion matrix view (for the linear-algebra inclined)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-diagnostics-safeguards-youll-see" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical diagnostics &amp; safeguards you’ll see
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-patterns-to-recognize" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common patterns to recognize
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-constants-trends-and-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      The role of constants, trends, and drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The role of constants, trends, and drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arma-constants-set-the-long-run-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARMA: constants set the long-run mean
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-arma-to-arima-why-drift-appears" class="md-nav__link">
+    <span class="md-ellipsis">
+      From ARMA to ARIMA: why “drift” appears
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-your-softwares-trend-flag-really-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      What your software’s “trend” flag really means
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-behavior-mean-reversion-vs-linear-growth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecast behavior: mean reversion vs. linear growth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-pitfalls-and-how-to-spot-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common pitfalls and how to spot them
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-decision-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick decision guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forecasts-and-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecasts and uncertainty
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Forecasts and uncertainty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#point-forecasts-via-the-ma-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Point forecasts via the MA(∞) view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-error-variance-why-bands-widen" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forecast error variance (why bands widen)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-intervals-pis-vs-confidence-intervals-cis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prediction intervals (PIs) vs. confidence intervals (CIs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-and-long-horizon-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift and long-horizon behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-gaussian-and-heteroskedastic-shocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-Gaussian and heteroskedastic shocks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transforms-and-back-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transforms and back-transforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-arima-works-best" class="md-nav__link">
+    <span class="md-ellipsis">
+      When ARIMA works best
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When ARIMA works best">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-sweet-spot-data-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      The sweet spot (data properties)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-winning-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typical winning use cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signals-arima-is-a-good-idea-quick-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signals ARIMA is a good idea (quick checklist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-arima-is-not-your-first-pick-and-what-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where ARIMA is not your first pick (and what to do)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-edge-cases-and-easy-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical edge cases (and easy fixes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-autoarimaexplorer-exploits-this-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      How AutoArimaExplorer exploits this regime
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-common-data-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations and common data issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations and common data issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-structural-breaks-and-regime-shifts" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) Structural breaks and regime shifts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-seasonality-and-calendar-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) Seasonality and calendar effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-heteroskedasticity-time-varying-volatility" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Heteroskedasticity (time-varying volatility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-nonlinearity-and-long-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Nonlinearity and long memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-outliers-and-heavy-tails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Outliers and heavy tails
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-missing-data-and-irregular-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Missing data and irregular sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-over-under-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Over-/under-differencing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-near-nonstationarity-invertibility-unit-root-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Near nonstationarity / invertibility (unit-root edges)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-identifiability-and-multicollinearity-of-lags" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Identifiability and multicollinearity of lags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-exogenous-drivers-omitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      10) Exogenous drivers omitted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-small-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      11) Small samples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-long-horizon-forecasts" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Long-horizon forecasts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-caveats-tooling-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical caveats (tooling &amp; diagnostics)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-autoarimaexplorer-mitigates-these-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      How AutoArimaExplorer mitigates these issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-identification-heuristics-modeling-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical identification heuristics (modeling playbook)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical identification heuristics (modeling playbook)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-sanity-checks-cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      0) Sanity checks &amp; cleaning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-first-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) First look
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-make-it-stationary-choose-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) Make it stationary (choose \(d\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-seasonal-structure-if-applicable" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Seasonal structure (if applicable)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-choose-small-candidate-orders-p-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Choose small candidate orders (\(p, q\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-fit-compare-in-sample-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Fit &amp; compare (in-sample guardrails)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cross-validate-out-of-sample-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Cross-validate (out-of-sample reality check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-volatility-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Volatility &amp; intervals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-edgeboundary-situations" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Edge/boundary situations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-checklist-for-good-arima" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Checklist for “good” ARIMA
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-tiny-acfpacf-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      A tiny ACF/PACF cheat-sheet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-looks-like-in-practice-with-autoarimaexplorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      What this looks like in practice with AutoArimaExplorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extensions-you-should-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extensions you should know
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-this-theory-guides-autoarimaexplorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      How this theory guides AutoArimaExplorer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-the-stats-live-and-what-to-read-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where the stats live (and what to read next)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="arima-theory-in-practice">ARIMA — Theory in Practice<a class="headerlink" href="#arima-theory-in-practice" title="Permanent link">&para;</a></h1>
+<p>ARIMA is the canonical model for short-horizon forecasting when a single series exhibits short-memory dynamics. It marries three ideas:</p>
+<ol>
+<li><strong>Autoregression (AR):</strong> today echoes past levels.</li>
+<li><strong>Moving Average (MA):</strong> today also echoes past shocks.</li>
+<li><strong>Integration (I):</strong> if levels drift, difference them until the mean is stable.</li>
+</ol>
+<p>Formally, an <strong>ARIMA(p, d, q)</strong> for a series <span class="arithmatex">\(x_t\)</span> applies <span class="arithmatex">\(d\)</span> differences and then fits an ARMA on <span class="arithmatex">\(\Delta^d x_t\)</span>:</p>
+<div class="arithmatex">\[
+\phi(B)\,\Delta^d x_t = \theta(B)\,\varepsilon_t,\qquad \varepsilon_t \stackrel{i.i.d.}{\sim} (0,\sigma^2),
+\]</div>
+<p>with <span class="arithmatex">\(\phi(B)=1-\phi_1 B-\cdots-\phi_p B^p\)</span> and <span class="arithmatex">\(\theta(B)=1+\theta_1 B+\cdots+\theta_q B^q\)</span>.
+Here <span class="arithmatex">\(B\)</span> is the backshift operator, <span class="arithmatex">\(B x_t = x_{t-1}\)</span>.</p>
+<hr />
+<h2 id="from-arma-to-arima-why-differencing-matters">From ARMA to ARIMA (why differencing matters)<a class="headerlink" href="#from-arma-to-arima-why-differencing-matters" title="Permanent link">&para;</a></h2>
+<p>A Classical ARMA models assume the series is <strong>weakly stationary</strong>—constant mean/variance and an autocovariance that depends only on the lag. Many economic and financial series aren’t: they drift, trend, or exhibit unit roots. <strong>Differencing</strong> is the bridge from a non-stationary data-generating process to a stationary one that ARMA can legitimately model. That’s the “I” in ARIMA.</p>
+<h3 id="what-differencing-does-mathematically-and-intuitively">What differencing does (mathematically and intuitively)<a class="headerlink" href="#what-differencing-does-mathematically-and-intuitively" title="Permanent link">&para;</a></h3>
+<p>The first difference operator is</p>
+<div class="arithmatex">\[
+\nabla x_t = x_t - x_{t-1} = (1 - B)\,x_t,
+\]</div>
+<p>with <span class="arithmatex">\(B\)</span> the backshift operator. Applying it <span class="arithmatex">\(d\)</span> times yields</p>
+<div class="arithmatex">\[
+\nabla^d x_t = (1 - B)^d\,x_t.
+\]</div>
+<ul>
+<li>If <span class="arithmatex">\(x_t\)</span> contains a <strong>unit root</strong> (a root at <span class="arithmatex">\(z=1\)</span> of the AR polynomial), then <span class="arithmatex">\(\nabla x_t\)</span> removes that root and typically produces a stationary series.</li>
+<li>Intuition: differencing converts <strong>levels</strong> to <strong>changes</strong>. Deterministic trends become approximately constant shifts; stochastic trends (random walks) become mean-reverting innovations.</li>
+</ul>
+<p>When we say ARIMA<span class="arithmatex">\((p,d,q)\)</span>, we mean that <span class="arithmatex">\(y_t = \nabla^d x_t\)</span> is well-described by an ARMA<span class="arithmatex">\((p,q)\)</span>:</p>
+<div class="arithmatex">\[
+\phi(B)\,y_t = \theta(B)\,\varepsilon_t,\qquad \varepsilon_t \sim \text{i.i.d. }(0,\sigma^2).
+\]</div>
+<p>We model <span class="arithmatex">\(y_t\)</span> (the differenced series) with ARMA, then <strong>integrate back</strong> (cumulate the forecasts) to obtain predictions for <span class="arithmatex">\(x_t\)</span>.</p>
+<h3 id="how-many-differences-do-we-need">How many differences do we need?<a class="headerlink" href="#how-many-differences-do-we-need" title="Permanent link">&para;</a></h3>
+<p>There is no prize for over-differencing. We aim for the <strong>smallest <span class="arithmatex">\(d\)</span></strong> that yields an approximately stationary series:</p>
+<ul>
+<li><strong><span class="arithmatex">\(d=0\)</span></strong>: already stationary in level (common for returns, log-returns).</li>
+<li><strong><span class="arithmatex">\(d=1\)</span></strong>: removes a single unit root (random-walk-like behavior).</li>
+<li><strong><span class="arithmatex">\(d=2\)</span></strong>: rarely necessary; implies acceleration in the level process (e.g., integrated of order two).</li>
+</ul>
+<p>Practical decision aids:</p>
+<ul>
+<li>Visual: level series with pronounced drift and ACF that decays <strong>very slowly</strong> suggests differencing; the first difference should look mean-reverting with a rapidly decaying ACF.</li>
+<li>Tests: unit-root tests (ADF) and stationarity checks (KPSS) provide complementary evidence. (We develop the formalities in the <em>Statistical Concepts</em> chapter.)</li>
+<li>Residual diagnostics after provisional fits: if ARMA on the differenced series still shows <strong>low-frequency leakage</strong> (residual ACF significant at large lags), you may be under-differenced.</li>
+</ul>
+<h3 id="the-cost-of-differencing-variance-and-signal">The cost of differencing (variance and signal)<a class="headerlink" href="#the-cost-of-differencing-variance-and-signal" title="Permanent link">&para;</a></h3>
+<p>Differencing is not free:</p>
+<ul>
+<li>It <strong>amplifies high-frequency noise</strong>. For white noise <span class="arithmatex">\(w_t\)</span>, <span class="arithmatex">\(\nabla w_t = w_t - w_{t-1}\)</span> has variance <span class="arithmatex">\(2\sigma^2\)</span>.</li>
+<li>It <strong>removes low-frequency content</strong> that may be predictive (e.g., smooth trends).</li>
+<li>It reduces effective sample size for estimation and forecasting at the level scale (integration accumulates uncertainty).</li>
+</ul>
+<p>Hence the “minimal <span class="arithmatex">\(d\)</span>” principle: take <strong>just enough</strong> differences to achieve stationarity and push the remaining structure into <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>.</p>
+<h3 id="over-differencing-vs-under-differencing">Over-differencing vs under-differencing<a class="headerlink" href="#over-differencing-vs-under-differencing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Under-differenced</strong>: residual ACF decays slowly; information criteria push toward larger <span class="arithmatex">\(p\)</span> to mimic the trend; forecasts may drift spuriously.</li>
+<li><strong>Over-differenced</strong>: residuals show <strong>negative</strong> autocorrelation at lag 1; the MA part balloons to compensate; forecast intervals widen unnecessarily.</li>
+</ul>
+<p>A quick heuristic: if the ACF of <span class="arithmatex">\(\nabla x_t\)</span> is <strong>strongly negative at lag 1</strong> and otherwise small, you may have over-differenced.</p>
+<h3 id="drift-and-deterministic-components">Drift and deterministic components<a class="headerlink" href="#drift-and-deterministic-components" title="Permanent link">&para;</a></h3>
+<p>With <span class="arithmatex">\(d=1\)</span>, a <strong>drift</strong> term in the differenced model is equivalent to a linear trend in levels. In ARIMA notation this is the constant/trend handling:</p>
+<ul>
+<li>For <span class="arithmatex">\(d=0\)</span>, a constant (trend = 'c') produces a non-zero mean stationary process.</li>
+<li>For <span class="arithmatex">\(d\ge 1\)</span>, including a constant behaves like a <strong>polynomial trend</strong> in levels; many implementations disable lower-order trends automatically to avoid identification issues.</li>
+</ul>
+<p>AutoArimaExplorer mirrors this: for <span class="arithmatex">\(d=0\)</span> it tries with/without constant; for <span class="arithmatex">\(d\ge 1\)</span> it toggles drift sensibly while respecting identifiability.</p>
+<h3 id="seasonal-differencing-briefly">Seasonal differencing (briefly)<a class="headerlink" href="#seasonal-differencing-briefly" title="Permanent link">&para;</a></h3>
+<p>If there is seasonal integration—e.g., a unit root at the seasonal frequency—apply <strong>seasonal differencing</strong> <span class="arithmatex">\(\nabla_s x_t = x_t - x_{t-s}\)</span> possibly in addition to the non-seasonal <span class="arithmatex">\(\nabla\)</span>. Purely non-seasonal ARIMA often mis-specifies such series, leading to stubborn seasonal autocorrelation in residuals. (We treat SARIMA in a dedicated chapter.)</p>
+<h3 id="how-differencing-interacts-with-p-and-q">How differencing interacts with <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span><a class="headerlink" href="#how-differencing-interacts-with-p-and-q" title="Permanent link">&para;</a></h3>
+<p>Differencing reshapes the correlation structure:</p>
+<ul>
+<li>Many stochastic trends can be captured either by <strong>higher <span class="arithmatex">\(p\)</span></strong> in ARMA <strong>or</strong> by <strong>one difference plus smaller <span class="arithmatex">\(p\)</span></strong>. The latter is usually cleaner and more stable.</li>
+<li>After differencing, expect <strong>short-memory</strong> residual dynamics; <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span> should be modest (e.g., 0–3). If you keep needing large <span class="arithmatex">\(p\)</span>/<span class="arithmatex">\(q\)</span>, revisit <span class="arithmatex">\(d\)</span> (or seasonality, exogenous drivers, or variance dynamics).</li>
+</ul>
+<h3 id="common-data-issues-and-what-differencing-cant-fix">Common data issues (and what differencing can’t fix)<a class="headerlink" href="#common-data-issues-and-what-differencing-cant-fix" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Structural breaks / regime shifts</strong>: differencing doesn’t heal breaks; consider break detection, dummy variables, or regime-switching models.</li>
+<li><strong>Heteroskedasticity</strong> (volatility clustering): differencing mean structure doesn’t remove conditional variance dynamics; consider GARCH-type or robust errors. (Our residual <strong>squared</strong> Ljung–Box check is a quick proxy.)</li>
+<li><strong>Nonlinearities</strong>: if dynamics depend on the state (thresholds, saturations), linear ARIMA may be systematically biased.</li>
+<li><strong>Strong seasonality or calendar effects</strong>: handle seasonality explicitly; differencing alone is crude.</li>
+</ul>
+<h3 id="practical-diagnostics-youll-see-in-this-project">Practical diagnostics you’ll see in this project<a class="headerlink" href="#practical-diagnostics-youll-see-in-this-project" title="Permanent link">&para;</a></h3>
+<p>AutoArimaExplorer enforces a few disciplined checks:</p>
+<ul>
+<li><strong>Ljung–Box on residuals</strong> (and optionally on squared residuals): if differencing and ARMA are doing their job, residual autocorrelation—especially at low lags—should be statistically negligible.</li>
+<li><strong>Information criteria</strong> (AIC/BIC): used to balance fit and parsimony on the differenced series.</li>
+<li><strong>Competing <span class="arithmatex">\(d\)</span></strong>: we explicitly compare <span class="arithmatex">\(d \in \{0,1,2\}\)</span>, letting diagnostics, not habit, choose the level of integration.</li>
+</ul>
+<h3 id="bottom-line">Bottom line<a class="headerlink" href="#bottom-line" title="Permanent link">&para;</a></h3>
+<p>ARIMA is not “ARMA but fancier”—it’s <strong>ARMA on the right scale</strong>. Correct differencing is the decisive step that turns drifting, unit-rooty level data into a stable signal where short-memory ARMA can do honest work. Get <span class="arithmatex">\(d\)</span> right, and <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span> become small, interpretable, and forecast-useful; get <span class="arithmatex">\(d\)</span> wrong, and the rest is damage control.</p>
+<hr />
+<h2 id="stationarity-invertibility-the-root-picture">Stationarity &amp; Invertibility (the root picture)<a class="headerlink" href="#stationarity-invertibility-the-root-picture" title="Permanent link">&para;</a></h2>
+<p>ARIMA models live or die by the location of a few complex numbers. The most useful way to reason about <strong>stationarity</strong> (for the AR part) and <strong>invertibility</strong> (for the MA part) is to look at the <strong>roots</strong> of their characteristic polynomials in the complex plane.</p>
+<h3 id="the-two-polynomials">The two polynomials<a class="headerlink" href="#the-two-polynomials" title="Permanent link">&para;</a></h3>
+<p>For an ARMA<span class="arithmatex">\((p,q)\)</span> model on a (differenced) series <span class="arithmatex">\(y_t\)</span>,</p>
+<div class="arithmatex">\[
+\phi(B)\,y_t \;=\; \theta(B)\,\varepsilon_t,\qquad \varepsilon_t\sim\text{i.i.d. }(0,\sigma^2),
+\]</div>
+<p>with</p>
+<div class="arithmatex">\[
+\phi(B)=1-\phi_1 B-\cdots-\phi_p B^p,\qquad
+\theta(B)=1+\theta_1 B+\cdots+\theta_q B^q.
+\]</div>
+<ul>
+<li><strong>AR stationarity:</strong> All roots of <span class="arithmatex">\(\phi(z)=0\)</span> must lie <strong>outside</strong> the unit circle <span class="arithmatex">\(\{|z|&gt;1\}\)</span>.</li>
+<li><strong>MA invertibility:</strong> All roots of <span class="arithmatex">\(\theta(z)=0\)</span> must lie <strong>outside</strong> the unit circle <span class="arithmatex">\(\{|z|&gt;1\}\)</span>.</li>
+</ul>
+<p>These conditions guarantee:</p>
+<ul>
+<li>A <strong>stable</strong> moving-average representation <span class="arithmatex">\(y_t=\sum_{k\ge 0}\psi_k \varepsilon_{t-k}\)</span> with absolutely summable <span class="arithmatex">\(\{\psi_k\}\)</span>,</li>
+<li>A <strong>unique</strong> innovation process (no observationally equivalent “non-invertible” parameterizations).</li>
+</ul>
+<blockquote>
+<p>In ARIMA<span class="arithmatex">\((p,d,q)\)</span>, the differenced series <span class="arithmatex">\(y_t=\nabla^d x_t\)</span> should satisfy the ARMA root conditions above. The unit roots associated with <span class="arithmatex">\((1-B)^d\)</span> live <em>on</em> the unit circle by design—that’s the “I” you chose to difference away.</p>
+</blockquote>
+<h3 id="quick-intuition-with-ar1-and-ma1">Quick intuition with AR(1) and MA(1)<a class="headerlink" href="#quick-intuition-with-ar1-and-ma1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AR(1):</strong> <span class="arithmatex">\(y_t=\phi y_{t-1}+\varepsilon_t\)</span>.
+  <span class="arithmatex">\(\phi(z)=1-\phi z\Rightarrow z=1/\phi\)</span>. Stationary iff <span class="arithmatex">\(|\phi|&lt;1\)</span> (root at <span class="arithmatex">\(|z|&gt;1\)</span>).</li>
+<li><strong>MA(1):</strong> <span class="arithmatex">\(y_t=\varepsilon_t+\theta \varepsilon_{t-1}\)</span>.
+  <span class="arithmatex">\(\theta(z)=1+\theta z\Rightarrow z=-1/\theta\)</span>. Invertible iff <span class="arithmatex">\(|\theta|&lt;1\)</span>.</li>
+</ul>
+<p>A useful mental model: <strong>the closer a root is to the unit circle</strong>, the more <strong>persistent</strong> (slowly decaying) the correlation pattern. Cross the circle and persistence becomes explosive (AR) or the innovations become non-unique (MA).</p>
+<h3 id="the-geometry-what-roots-mean">The geometry: what roots “mean”<a class="headerlink" href="#the-geometry-what-roots-mean" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Real roots <span class="arithmatex">\(r&gt;1\)</span> (AR):</strong> slow, monotone decay in the ACF (persistence).
+  Roots near <span class="arithmatex">\(1^+\)</span> ↔ very long memory in mean.</li>
+<li><strong>Real roots <span class="arithmatex">\(r&lt;-1\)</span> (AR):</strong> alternating-sign decay (oscillations with period \~2).</li>
+<li><strong>Complex conjugate roots <span class="arithmatex">\(re^{\pm i\omega}\)</span> (AR):</strong> damped cycles with angular frequency <span class="arithmatex">\(\omega\)</span> and damping <span class="arithmatex">\(r^{-k}\)</span>. Period <span class="arithmatex">\(\approx 2\pi/\omega\)</span>.</li>
+<li><strong>MA roots</strong> control <strong>invertibility</strong> and the shape of the <strong>ACF at small lags</strong>; non-invertible parameterizations have an equivalent invertible twin (flip a root <span class="arithmatex">\(z\)</span> inside the unit circle to its reciprocal <span class="arithmatex">\(1/\bar z\)</span>) producing the <em>same</em> second-order behavior but a different innovation sequence. That’s why we <em>enforce</em> invertibility: it’s a normalization for uniqueness.</li>
+</ul>
+<h3 id="why-roots-near-1-are-troublesome">Why roots near 1 are troublesome<a class="headerlink" href="#why-roots-near-1-are-troublesome" title="Permanent link">&para;</a></h3>
+<p>Roots that <strong>hug</strong> the unit circle cause:</p>
+<ul>
+<li><strong>Numerical fragility</strong> (flat likelihood; optimizer plateaus).</li>
+<li><strong>Huge forecast persistence</strong> (wide intervals, slow mean reversion).</li>
+<li><strong>Diagnostic confusion</strong>: residual autocorrelation decays so slowly that Ljung–Box rejects unless you difference or simplify.</li>
+</ul>
+<p>Practically, if an AR root is very close to <span class="arithmatex">\(1\)</span> (or a seasonal root to <span class="arithmatex">\(e^{2\pi i/s}\)</span>), you probably need <strong>(seasonal) differencing</strong> rather than higher-order AR terms.</p>
+<h3 id="arima-and-unit-roots">ARIMA and unit roots<a class="headerlink" href="#arima-and-unit-roots" title="Permanent link">&para;</a></h3>
+<p>ARIMA explicitly factors unit roots into <span class="arithmatex">\((1-B)^d\)</span>. The <strong>stationarity</strong> condition applies to the <em>remaining</em> AR polynomial <span class="arithmatex">\(\phi\)</span>. Equivalently:</p>
+<div class="arithmatex">\[
+(1-B)^d\,\phi(B)\,x_t=\theta(B)\,\varepsilon_t,\quad
+\text{with }\phi(z)\text{ root-outside and }\theta(z)\text{ root-outside.}
+\]</div>
+<p>So the differenced process is stationary/invertible, while the level process has <span class="arithmatex">\(d\)</span> unit roots by construction.</p>
+<h3 id="companion-matrix-view-for-the-linear-algebra-inclined">Companion matrix view (for the linear-algebra inclined)<a class="headerlink" href="#companion-matrix-view-for-the-linear-algebra-inclined" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(A\)</span> be the AR companion matrix. Stationarity is equivalent to the <strong>spectral radius</strong> <span class="arithmatex">\(\rho(A)&lt;1\)</span>. This is the same “root outside the unit circle” condition in matrix clothing and explains why near-unit roots create near-unit eigenvalues—ill-conditioned likelihoods and fragile estimates.</p>
+<h3 id="practical-diagnostics-safeguards-youll-see">Practical diagnostics &amp; safeguards you’ll see<a class="headerlink" href="#practical-diagnostics-safeguards-youll-see" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Root checks:</strong> It’s good practice to compute AR &amp; MA roots post-fit and confirm <span class="arithmatex">\(|z|&gt;1\)</span> with margin. Roots with <span class="arithmatex">\(|z|\approx 1\)</span> merit simpler models or differencing.</li>
+<li><strong>Constraints in fitting:</strong> Many libraries (including what we leverage) can <strong>enforce stationarity/invertibility</strong> during optimization. AutoArimaExplorer tries both constrained and unconstrained trials and keeps the best admissible fit.</li>
+<li><strong>Ljung–Box (residuals &amp; squared residuals):</strong> If roots are well-behaved, residual autocorrelation should be negligible. Persistent low-lag structure often points to roots too close to 1 (or missing seasonality/exogenous drivers).</li>
+</ul>
+<h3 id="common-patterns-to-recognize">Common patterns to recognize<a class="headerlink" href="#common-patterns-to-recognize" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Under-differenced:</strong> AR roots estimated <strong>very near 1</strong>; slow ACF tail; models prefer large <span class="arithmatex">\(p\)</span>. Fix with differencing.</li>
+<li><strong>Over-differenced:</strong> Strong <strong>negative</strong> lag-1 ACF; MA balloons to compensate. Reduce <span class="arithmatex">\(d\)</span>.</li>
+<li><strong>Non-invertible MA:</strong> Coefficients imply <span class="arithmatex">\(|z|\le 1\)</span> for some MA root; flip to the invertible representation (libraries usually do this or we reject such trials).</li>
+</ul>
+<blockquote>
+<p>For formal definitions of weak stationarity, Wold decomposition, absolute summability, and asymptotic properties, see the <strong>Statistical Concepts</strong> chapter. Here, the rule of thumb is simple: <strong>keep all AR and MA roots comfortably outside the unit circle</strong>, and your ARIMA will behave like a stable linear filter rather than a barely-tamed random walk.</p>
+</blockquote>
+<hr />
+<h2 id="the-role-of-constants-trends-and-drift">The role of constants, trends, and drift<a class="headerlink" href="#the-role-of-constants-trends-and-drift" title="Permanent link">&para;</a></h2>
+<p>A surprisingly large share of ARIMA modeling comes down to a small choice: <strong>do we include a deterministic level or slope?</strong> In practice this shows up as a <strong>constant</strong> (intercept), a <strong>linear trend</strong>, or, after differencing, a <strong>drift</strong>. Getting this right determines long-run behavior and the shape of your forecasts.</p>
+<h3 id="arma-constants-set-the-long-run-mean">ARMA: constants set the long-run mean<a class="headerlink" href="#arma-constants-set-the-long-run-mean" title="Permanent link">&para;</a></h3>
+<p>For a stationary ARMA<span class="arithmatex">\((p,q)\)</span> model on <span class="arithmatex">\(y_t\)</span>,</p>
+<div class="arithmatex">\[
+y_t \;=\; c \;+\; \sum_{i=1}^{p}\phi_i\,y_{t-i} \;+\; \varepsilon_t \;+\; \sum_{j=1}^{q}\theta_j\,\varepsilon_{t-j},
+\quad \varepsilon_t\stackrel{\text{i.i.d.}}{\sim}(0,\sigma^2),
+\]</div>
+<p>the unconditional mean exists and equals</p>
+<div class="arithmatex">\[
+\mu \;=\; \frac{c}{\,1-\sum_{i=1}^{p}\phi_i\,}.
+\]</div>
+<ul>
+<li>If you <strong>omit</strong> <span class="arithmatex">\(c\)</span> (trend='n'), you force <span class="arithmatex">\(\mu=0\)</span>. That’s often appropriate for <strong>returns</strong>.</li>
+<li>If you <strong>include</strong> <span class="arithmatex">\(c\)</span> (trend='c'), the process <strong>mean-reverts</strong> to <span class="arithmatex">\(\mu\)</span>, and multi-step forecasts flatten toward <span class="arithmatex">\(\mu\)</span>.</li>
+</ul>
+<p><strong>Heuristic:</strong> For <span class="arithmatex">\(d=0\)</span>, use no constant when working with demeaned data or near-zero-mean returns; allow a constant at levels if a nonzero mean is plausible.</p>
+<h3 id="from-arma-to-arima-why-drift-appears">From ARMA to ARIMA: why “drift” appears<a class="headerlink" href="#from-arma-to-arima-why-drift-appears" title="Permanent link">&para;</a></h3>
+<p>In ARIMA<span class="arithmatex">\((p,d,q)\)</span> we model <span class="arithmatex">\(x_t\)</span> through <span class="arithmatex">\(d\)</span>-th differences <span class="arithmatex">\(y_t = \nabla^{d} x_t\)</span> that follow ARMA<span class="arithmatex">\((p,q)\)</span>. Deterministic terms transform under differencing:</p>
+<ul>
+<li>A <strong>constant</strong> in levels disappears after <strong>one</strong> difference.</li>
+<li>A <strong>linear trend</strong> in levels becomes a <strong>constant (drift)</strong> after one difference.</li>
+<li>In general, a polynomial trend of degree <span class="arithmatex">\(m\)</span> in levels becomes a polynomial of degree <span class="arithmatex">\(m-d\)</span> (or vanishes if <span class="arithmatex">\(m&lt;d\)</span>) in the differenced series.</li>
+</ul>
+<p>For the common <span class="arithmatex">\(d=1\)</span> case (random-walk-like levels), you’ll see <strong>drift</strong>:</p>
+<div class="arithmatex">\[
+\nabla x_t \equiv x_t - x_{t-1} \;=\; \delta \;+\; \text{ARMA}(p,q)\text{ noise}.
+\]</div>
+<p>Equivalently, <span class="arithmatex">\(x_t\)</span> is a <strong>random walk with drift <span class="arithmatex">\(\delta\)</span></strong> plus stationary noise. Its expectation is linear:</p>
+<div class="arithmatex">\[
+\mathbb{E}[x_t] \;=\; x_0 \;+\; \delta\,t.
+\]</div>
+<p>Forecasts inherit a <strong>linear slope</strong> <span class="arithmatex">\(\delta\)</span>: long-horizon point forecasts march upward (or downward) at rate <span class="arithmatex">\(\delta\)</span>, while uncertainty widens with horizon.</p>
+<h3 id="what-your-softwares-trend-flag-really-means">What your software’s “trend” flag really means<a class="headerlink" href="#what-your-softwares-trend-flag-really-means" title="Permanent link">&para;</a></h3>
+<p>Most libraries expose deterministic terms via a <code>trend</code> argument:</p>
+<ul>
+<li><code>trend='n'</code> — no deterministic term.</li>
+<li><code>trend='c'</code> — constant (intercept).</li>
+<li><code>trend='t'</code> — linear time trend.</li>
+<li><code>trend='ct'</code> — both constant and trend (when identifiable).</li>
+</ul>
+<p><strong>Crucial constraint (identifiability):</strong>
+When you difference <span class="arithmatex">\(d\)</span> times, <strong>trend terms of order &lt; <span class="arithmatex">\(d\)</span></strong> are <strong>not</strong> identifiable (they are annihilated by differencing) and should be omitted. Concretely:</p>
+<ul>
+<li>With <strong><span class="arithmatex">\(d=0\)</span></strong>: you may use <code>'n'</code>, <code>'c'</code>, <code>'t'</code>, or <code>'ct'</code> as appropriate.</li>
+<li>With <strong><span class="arithmatex">\(d=1\)</span></strong>: a pure constant in levels vanishes, but a <strong>linear trend in levels</strong> corresponds to <strong>drift in <span class="arithmatex">\(\nabla x_t\)</span></strong>. Use <code>'t'</code> (not <code>'c'</code>). Many libraries will warn or silently drop invalid terms.</li>
+<li>With <strong><span class="arithmatex">\(d\ge 2\)</span></strong>: only higher-order trends survive; in most practical ARIMA work, you set <code>'n'</code> unless you explicitly model higher-order polynomials.</li>
+</ul>
+<blockquote>
+<p>Mapping tip: “<strong>drift</strong>” in the differenced equation is equivalent to selecting a <strong>linear trend in levels</strong> (e.g., <code>trend='t'</code> when <span class="arithmatex">\(d=1\)</span>). A plain intercept (<code>'c'</code>) is appropriate for <span class="arithmatex">\(d=0\)</span> but not for <span class="arithmatex">\(d=1\)</span>.</p>
+</blockquote>
+<h3 id="forecast-behavior-mean-reversion-vs-linear-growth">Forecast behavior: mean reversion vs. linear growth<a class="headerlink" href="#forecast-behavior-mean-reversion-vs-linear-growth" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>ARMA with constant (d=0):</strong> forecasts <strong>revert</strong> to <span class="arithmatex">\(\mu\)</span>.</li>
+<li><strong>ARIMA with drift (d=1):</strong> forecasts <strong>grow linearly</strong> with slope <span class="arithmatex">\(\delta\)</span>.</li>
+<li><strong>No deterministic term:</strong> forecasts revert to <strong>zero</strong> (d=0) or to the <strong>last level</strong> (random walk without drift, <span class="arithmatex">\(d=1\)</span>).</li>
+</ul>
+<p>Choose the specification that matches domain knowledge:</p>
+<ul>
+<li>Financial prices → often <strong><span class="arithmatex">\(d=1\)</span></strong> with <strong>no drift</strong> unless there’s structural growth.</li>
+<li>Macroeconomic levels (e.g., GDP) → <strong><span class="arithmatex">\(d=1\)</span></strong> and <strong>drift</strong> is common.</li>
+<li>Stationary spreads/returns → <strong><span class="arithmatex">\(d=0\)</span></strong> with or without a <strong>constant</strong> depending on the mean.</li>
+</ul>
+<h3 id="common-pitfalls-and-how-to-spot-them">Common pitfalls and how to spot them<a class="headerlink" href="#common-pitfalls-and-how-to-spot-them" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Including an intercept when <span class="arithmatex">\(d=1\)</span>:</strong> it’s not identified; your library will warn or drop it. Use <code>'t'</code> (drift) instead if a slope is justified.</li>
+<li><strong>Spurious trends:</strong> an apparent slope driven by a short sample or regime shift. Check stability (rolling estimates) and use out-of-sample validation.</li>
+<li><strong>Over-deterministic modeling:</strong> a strong linear trend plus AR terms can overfit; let differencing and AR capture persistence unless a trend is truly structural.</li>
+<li><strong>Forecast pathology:</strong> If long-horizon forecasts explode or hug the last observation implausibly, revisit the deterministic term: you may need to add/drop <strong>drift</strong> or switch between <code>'c'</code> and <code>'n'</code>.</li>
+</ul>
+<h3 id="quick-decision-guide">Quick decision guide<a class="headerlink" href="#quick-decision-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Is the working series stationary (after your chosen differencing)?</strong></p>
+<ul>
+<li>Yes (<span class="arithmatex">\(d=0\)</span>) → Consider a <strong>constant</strong> only if the mean is materially nonzero.</li>
+<li>No (<span class="arithmatex">\(d=1\)</span>) → Consider <strong>drift</strong> (via <code>trend='t'</code>) if a linear trend in levels is credible.</li>
+</ul>
+</li>
+<li>
+<p><strong>Do forecasts need a long-run level or slope?</strong></p>
+<ul>
+<li>Level (mean reversion) → constant at <span class="arithmatex">\(d=0\)</span>.</li>
+<li>Slope (steady growth/decline) → drift at <span class="arithmatex">\(d=1\)</span>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Do diagnostics agree?</strong></p>
+<ul>
+<li>Intercept/drift significant; BIC improves; residuals pass Ljung–Box → keep it.</li>
+<li>Otherwise, prefer the simpler deterministic structure.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="forecasts-and-uncertainty">Forecasts and uncertainty<a class="headerlink" href="#forecasts-and-uncertainty" title="Permanent link">&para;</a></h2>
+<p>Forecasting with ARIMA is more than a point prediction. We also need a <strong>distribution</strong> for the future, because decisions hinge on how wide the plausible range is. This section lays out (i) how ARIMA point forecasts are formed, (ii) how forecast <strong>errors</strong> accumulate with the horizon, and (iii) how to build <strong>prediction intervals</strong> (PIs)—including the caveats that matter in practice.</p>
+<h3 id="point-forecasts-via-the-ma-view">Point forecasts via the MA(∞) view<a class="headerlink" href="#point-forecasts-via-the-ma-view" title="Permanent link">&para;</a></h3>
+<p>Any causal ARMA<span class="arithmatex">\((p,q)\)</span> (and thus any ARIMA once you difference) admits an MA(∞) representation</p>
+<div class="arithmatex">\[
+y_t \;=\; \mu + \sum_{j=0}^{\infty}\psi_j \,\varepsilon_{t-j}, 
+\qquad \psi_0=1,\quad \sum_j|\psi_j|&lt;\infty,
+\]</div>
+<p>with <span class="arithmatex">\(\varepsilon_t \overset{i.i.d.}{\sim}(0,\sigma^2)\)</span> and <span class="arithmatex">\(\psi(B)=\frac{\theta(B)}{\phi(B)}\)</span>. For horizon <span class="arithmatex">\(h\ge 1\)</span>,</p>
+<div class="arithmatex">\[
+\widehat{y}_{t}(h) \;\equiv\; \mathbb{E}[y_{t+h}\mid \mathcal{F}_t]
+\;=\; \mu + \sum_{j=h}^{\infty}\psi_j \,\varepsilon_{t+h-j},
+\]</div>
+<p>since future shocks (<span class="arithmatex">\(j&lt;h\)</span>) have zero mean. In practice, software computes <span class="arithmatex">\(\widehat{y}_t(h)\)</span> by <strong>recursion</strong> in the ARIMA state or by using the MA(∞) weights; both yield the same predictor.</p>
+<ul>
+<li><strong>ARMA (stationary)</strong>: forecasts <strong>mean revert</strong> to <span class="arithmatex">\(\mu\)</span>.</li>
+<li><strong>ARIMA with <span class="arithmatex">\(d=1\)</span></strong>: if the differenced series has a <strong>drift</strong> <span class="arithmatex">\(\delta\)</span>, levels follow a random-walk-like path and point forecasts grow linearly: <span class="arithmatex">\(\widehat{x}_{t}(h) \approx x_t + \delta\,h\)</span> (plus ARMA adjustments).</li>
+</ul>
+<h3 id="forecast-error-variance-why-bands-widen">Forecast error variance (why bands widen)<a class="headerlink" href="#forecast-error-variance-why-bands-widen" title="Permanent link">&para;</a></h3>
+<p>Define the <span class="arithmatex">\(h\)</span>-step forecast error <span class="arithmatex">\(e_t(h) = y_{t+h}-\widehat{y}_t(h)\)</span>. For ARMA,</p>
+<div class="arithmatex">\[
+e_t(h) \;=\; \sum_{j=0}^{h-1}\psi_j\,\varepsilon_{t+h-j},
+\qquad
+\operatorname{Var}[e_t(h)] \;=\; \sigma^2 \sum_{j=0}^{h-1}\psi_j^2.
+\]</div>
+<p>Key implications:</p>
+<ul>
+<li>The <strong>one-step</strong> error variance is <span class="arithmatex">\(\sigma^2\)</span>.</li>
+<li>As <span class="arithmatex">\(h\)</span> grows, the partial sum <span class="arithmatex">\(\sum_{j=0}^{h-1}\psi_j^2\)</span> <strong>increases</strong>, so intervals widen.</li>
+<li>
+<p>For <strong>ARIMA</strong> with differencing (<span class="arithmatex">\(d\ge 1\)</span>), the variance of <strong>levels</strong> grows <strong>without bound</strong>:</p>
+</li>
+<li>
+<p>Random walk (<span class="arithmatex">\(d=1\)</span>, no drift): <span class="arithmatex">\(\operatorname{Var}[x_{t}(h)-x_t] = \sigma^2 h\)</span>.</p>
+</li>
+<li>Random walk with drift: <strong>same variance</strong>; drift affects the <strong>mean</strong>, not the spread.</li>
+</ul>
+<p>More generally, if <span class="arithmatex">\(\psi(B) = \theta(B)/\phi(B)\)</span> and the roots of <span class="arithmatex">\(\phi(z)\)</span> are outside the unit circle (stationarity), <span class="arithmatex">\(\psi_j\)</span> is absolutely summable and <span class="arithmatex">\(\sum_{j=0}^{h-1}\psi_j^2\)</span> stabilizes as <span class="arithmatex">\(h\to\infty\)</span> for <strong>ARMA</strong>. With <strong>integration</strong> (<span class="arithmatex">\(d\ge 1\)</span>), differencing introduces an additional accumulation that pushes level-forecast variance upward with <span class="arithmatex">\(h\)</span>.</p>
+<h3 id="prediction-intervals-pis-vs-confidence-intervals-cis">Prediction intervals (PIs) vs. confidence intervals (CIs)<a class="headerlink" href="#prediction-intervals-pis-vs-confidence-intervals-cis" title="Permanent link">&para;</a></h3>
+<ul>
+<li>A <strong>prediction interval</strong> aims to cover the <strong>future observation</strong>, not the (unknown) mean. Under Gaussian innovations,</li>
+</ul>
+<p>$$
+  \text{PI}<em>{1-\alpha}(h):\quad \widehat{y}_t(h) \;\pm\; z</em>{1-\alpha/2}\,\sqrt{\widehat{\operatorname{Var}}[e_t(h)]},
+  $$</p>
+<p>where <span class="arithmatex">\(\widehat{\operatorname{Var}}[e_t(h)]\)</span> comes from the model and <span class="arithmatex">\(z_{1-\alpha/2}\)</span> is the standard normal quantile.
+* A <strong>confidence interval</strong> for the <strong>forecast mean</strong> is narrower; it ignores the one-step-ahead innovation term and (in ARIMA) is rarely what you want for decisions.</p>
+<p><strong>Coverage caveat.</strong> Standard PIs typically <strong>ignore parameter uncertainty</strong> (estimation error in <span class="arithmatex">\(\phi,\theta,\sigma^2\)</span>). With short samples or highly persistent dynamics, nominal 95% PIs can <strong>under-cover</strong>. Two remedies:</p>
+<ol>
+<li><strong>Simulation (parametric bootstrap)</strong>: simulate many future paths using the estimated model; take empirical quantiles at each horizon.</li>
+<li><strong>Asymptotic adjustment</strong>: add a term derived from the delta method and the parameter covariance; rarely implemented in general ARIMA stacks.</li>
+</ol>
+<h3 id="drift-and-long-horizon-behavior">Drift and long-horizon behavior<a class="headerlink" href="#drift-and-long-horizon-behavior" title="Permanent link">&para;</a></h3>
+<p>For <span class="arithmatex">\(d=1\)</span> with <strong>drift</strong> <span class="arithmatex">\(\delta\)</span>, level forecasts step forward at slope <span class="arithmatex">\(\delta\)</span>:</p>
+<div class="arithmatex">\[
+\widehat{x}_t(h) \;=\; x_t + \delta\,h + \text{ARMA corrections}.
+\]</div>
+<p>Uncertainty is driven by the <strong>integrated noise</strong>, so the <strong>fan chart</strong> widens roughly like <span class="arithmatex">\(\sqrt{h}\)</span> for a random walk. If you see bands that do <strong>not</strong> widen in <span class="arithmatex">\(d=1\)</span> levels, you are likely looking at intervals for <strong>differences</strong> rather than <strong>levels</strong>, or a misreported variance.</p>
+<h3 id="non-gaussian-and-heteroskedastic-shocks">Non-Gaussian and heteroskedastic shocks<a class="headerlink" href="#non-gaussian-and-heteroskedastic-shocks" title="Permanent link">&para;</a></h3>
+<p>PIs above assume <strong>i.i.d. Gaussian</strong> innovations with <strong>constant variance</strong>. Real data often deviate:</p>
+<ul>
+<li><strong>Heavy tails / outliers</strong>: the normal-quantile recipe leads to <strong>undercoverage</strong>. Use robust quantiles via simulation or fit a heavier-tailed noise.</li>
+<li>
+<p><strong>Conditional heteroskedasticity (ARCH/GARCH)</strong>: variance <strong>evolves over time</strong>, so <span class="arithmatex">\(\operatorname{Var}[e_t(h)]\)</span> depends on the current volatility state. Remedies:</p>
+</li>
+<li>
+<p>Model volatility explicitly (ARIMA-GARCH).</p>
+</li>
+<li>Or transform to stabilize variance (e.g., log-returns), then model.</li>
+</ul>
+<h3 id="transforms-and-back-transforms">Transforms and back-transforms<a class="headerlink" href="#transforms-and-back-transforms" title="Permanent link">&para;</a></h3>
+<p>If you model a <strong>transformed series</strong> <span class="arithmatex">\(g(x_t)\)</span> (logs, Box–Cox, differencing), take care when <strong>back-transforming</strong> forecasts and intervals:</p>
+<ul>
+<li><strong>Log scale</strong>: if <span class="arithmatex">\(y_t=\log x_t\)</span> and <span class="arithmatex">\(\widehat{y}_t(h)\sim \mathcal{N}(m,s^2)\)</span>, the unbiased mean on the original scale is <span class="arithmatex">\(\exp(m+\tfrac12 s^2)\)</span> (log-normal correction). Applying <span class="arithmatex">\(\exp\)</span> naively to the endpoints of a symmetric PI on log scale yields an <strong>asymmetric</strong> PI on the original scale—this is <strong>correct</strong> and expected.</li>
+<li><strong>Differencing</strong>: level forecasts are obtained by <strong>integrating</strong> the predicted differences; the variance aggregates across steps, hence wider bands.</li>
+</ul>
+<h3 id="practical-checklist">Practical checklist<a class="headerlink" href="#practical-checklist" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Pick the horizon</strong>: Decide whether you need PIs for <strong>differences</strong> (flows) or <strong>levels</strong> (stocks).</li>
+<li><strong>Use the right deterministic term</strong>: drift in <span class="arithmatex">\(d=1\)</span> if a linear trend in levels is plausible; otherwise omit it.</li>
+<li><strong>Report PIs, not just points</strong>: Use model-based variance; for short samples or high persistence, prefer <strong>simulation-based</strong> bands.</li>
+<li><strong>Stress test coverage</strong>: Backtest PIs; aim for nominal coverage (e.g., \~95%). Tools like the <strong>Winkler score</strong> or empirical coverage by horizon help quantify calibration.</li>
+<li><strong>Mind volatility</strong>: If residuals show ARCH effects, expect undercoverage with homoskedastic ARIMA; consider ARIMA-GARCH or variance-stabilizing transforms.</li>
+<li><strong>Communicate widening</strong>: Stakeholders should expect wider uncertainty at longer horizons—especially for integrated processes.</li>
+</ol>
+<blockquote>
+<p>This treatment stays model-based and distribution-aware. For hypothesis tests, residual diagnostics, information criteria, and formal coverage backtests, see the <strong>Statistical Concepts</strong> chapter.</p>
+</blockquote>
+<hr />
+<h2 id="when-arima-works-best">When ARIMA works best<a class="headerlink" href="#when-arima-works-best" title="Permanent link">&para;</a></h2>
+<p>ARIMA shines when your series is well-explained by <strong>linear, short-memory dynamics</strong> after a <strong>small amount of differencing</strong>. In that regime, it delivers sharp short-to-medium-term forecasts, interpretable parameters, and well-calibrated uncertainty—without the overhead of complex models.</p>
+<h3 id="the-sweet-spot-data-properties">The sweet spot (data properties)<a class="headerlink" href="#the-sweet-spot-data-properties" title="Permanent link">&para;</a></h3>
+<p>ARIMA is a strong choice when most of the following hold:</p>
+<ul>
+<li><strong>Regular sampling &amp; enough history.</strong> Observations at a fixed cadence (no big gaps), with at least <strong>\~100–200 points</strong> for stable estimation and diagnostics.</li>
+<li><strong>Low-order integration.</strong> One difference (occasionally two) stabilizes level/variance and removes obvious trends; differenced series looks roughly stationary.</li>
+<li><strong>Short-range dependence.</strong> Autocorrelations decay quickly; PACF/ACF suggest low orders (small <span class="arithmatex">\(p,q\)</span>).</li>
+<li><strong>Variance is stable (or can be stabilized).</strong> Raw scale is homoskedastic, or becomes so after a simple transform (log, Box–Cox).</li>
+<li><strong>No strong seasonality</strong> (or it’s handled explicitly with SARIMA). The nonseasonal ARIMA part is for the “within-season” dynamics.</li>
+<li><strong>No frequent regime shifts.</strong> Mean/variance don’t jump around due to structural breaks; interventions are infrequent and can be modeled separately.</li>
+<li><strong>Innovations not too wild.</strong> Residuals are roughly Gaussian with thin/moderate tails; outliers are occasional rather than the rule.</li>
+</ul>
+<blockquote>
+<p>When these ingredients line up, ARIMA tends to produce forecasts that are hard to beat with much heavier machinery.</p>
+</blockquote>
+<h3 id="typical-winning-use-cases">Typical winning use cases<a class="headerlink" href="#typical-winning-use-cases" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Differenced levels with drift.</strong> Economic indicators, demand/consumption, web traffic, or price levels where <span class="arithmatex">\(\nabla x_t\)</span> behaves like a weakly-dependent process and a <strong>drift</strong> captures the average trend.</li>
+<li><strong>Return-like series.</strong> Financial/crypto <strong>log-returns</strong>: mean \~0, short memory, good fit with ARMA (often <span class="arithmatex">\(p,q \le 2\)</span>). If volatility clusters strongly, consider ARIMA-GARCH.</li>
+<li><strong>Operational short-term demand.</strong> Call volumes, ticket arrivals, inventory withdrawals—once detrended (and deseasonalized if needed), ARIMA captures day-to-day dynamics.</li>
+<li><strong>Post-processing of ML forecasts.</strong> ARIMA on <strong>residuals</strong> of a baseline model (hybrid ARIMA-X) to mop up linear autocorrelation left on the table.</li>
+</ul>
+<h3 id="signals-arima-is-a-good-idea-quick-checklist">Signals ARIMA is a good idea (quick checklist)<a class="headerlink" href="#signals-arima-is-a-good-idea-quick-checklist" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>After differencing:</strong> ACF tails off quickly; PACF has a few significant spikes only.</li>
+<li><strong>Diagnostics:</strong> Residuals pass <strong>Ljung–Box</strong> at standard lags; no obvious structure in residual ACF/PACF; variance looks flat over time.</li>
+<li><strong>Parsimony:</strong> Small <span class="arithmatex">\(p,q\)</span> give you most of the performance; adding lags doesn’t materially reduce BIC or OOS error.</li>
+<li><strong>Stable parameters:</strong> Re-fits on rolling windows yield similar coefficients and forecast error profiles.</li>
+</ul>
+<blockquote>
+<p>Tip: In AutoArimaExplorer, these checks are automated via BIC selection, Ljung–Box guardrails, and optional out-of-sample (rolling) validation.</p>
+</blockquote>
+<h3 id="where-arima-is-not-your-first-pick-and-what-to-do">Where ARIMA is not your first pick (and what to do)<a class="headerlink" href="#where-arima-is-not-your-first-pick-and-what-to-do" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Strong seasonality or calendar effects.</strong> Use <strong>SARIMA</strong> (seasonal terms), or decompose first (STL, calendar regressors) and ARIMA the remainder.</li>
+<li><strong>Time-varying volatility.</strong> Clear ARCH/GARCH signatures → consider <strong>ARIMA-GARCH</strong> or variance-stabilizing transforms.</li>
+<li><strong>Nonlinear dynamics / regime changes.</strong> Markov-switching, threshold effects, structural breaks → look at <strong>state-switching models</strong> or tree/NN methods with change-point handling.</li>
+<li><strong>Exogenous drivers dominate.</strong> If weather, price, promotions, or macro covariates explain most variance, use <strong>ARIMAX</strong> (ARIMA with regressors) or a pure regression with autocorrelated errors.</li>
+<li><strong>Sparse/irregular sampling.</strong> Consider state-space models with missing-data handling, or continuous-time alternatives.</li>
+<li><strong>Very long horizons.</strong> Integrated processes accumulate uncertainty fast; for long-range planning, pair ARIMA with scenario analysis or hierarchical/aggregated signals.</li>
+</ul>
+<h3 id="practical-edge-cases-and-easy-fixes">Practical edge cases (and easy fixes)<a class="headerlink" href="#practical-edge-cases-and-easy-fixes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>(1,1,1) looks “too simple.”</strong> That’s often fine—short memory is real. If residuals still show structure, try small increments (e.g., <span class="arithmatex">\((2,1,1)\)</span> or <span class="arithmatex">\((1,1,2)\)</span>), but accept <strong>parsimony</strong> when BIC and diagnostics agree.</li>
+<li><strong>Heteroskedastic residuals but mild.</strong> Keep ARIMA for the mean, use <strong>robust errors</strong> or widen PIs via simulation; only escalate to GARCH if coverage suffers.</li>
+<li><strong>Drift vs. constant confusion.</strong> With <span class="arithmatex">\(d=1\)</span>, use <strong>drift</strong> (not a level constant). With <span class="arithmatex">\(d=0\)</span>, use a <strong>constant</strong> if the mean is nonzero.</li>
+<li><strong>Outliers.</strong> Winsorize or add intervention dummies; otherwise a few spikes can spoil inference and intervals.</li>
+</ul>
+<h3 id="how-autoarimaexplorer-exploits-this-regime">How AutoArimaExplorer exploits this regime<a class="headerlink" href="#how-autoarimaexplorer-exploits-this-regime" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Two natural working series.</strong> Levels standardized for <span class="arithmatex">\(d\ge 1\)</span>; log-returns for <span class="arithmatex">\(d=0\)</span>.</li>
+<li><strong>Robust fitting policy.</strong> Multiple estimation “trials” (innovations MLE / state space, with/without constraints) and selection by <strong>BIC</strong>.</li>
+<li><strong>Guardrails by design.</strong> Residual <strong>Ljung–Box</strong> (mean, optionally squared), finite-BIC checks, and convergence enforcement.</li>
+<li><strong>Flexible selection.</strong> Best-by-BIC, best-by-<span class="arithmatex">\(q\)</span> (parsimonious within each MA order), and <strong>rolling OOS</strong> selection with RMSE/MAE/MAPE or Winkler score for interval calibration.</li>
+</ul>
+<blockquote>
+<p>If your data match the sweet-spot properties above, ARIMA—and by extension AutoArimaExplorer—will likely give you <strong>fast, interpretable, and reliable</strong> forecasts. For everything else, ARIMA remains a solid <strong>baseline</strong> and a powerful <strong>diagnostic lens</strong> to understand what additional structure (seasonality, exogenous signals, volatility, regimes) you may need.</p>
+</blockquote>
+<hr />
+<p>Here’s a ready-to-paste chapter.</p>
+<hr />
+<h2 id="limitations-and-common-data-issues">Limitations and common data issues<a class="headerlink" href="#limitations-and-common-data-issues" title="Permanent link">&para;</a></h2>
+<p>ARIMA is a powerful baseline, but it has clear failure modes. Knowing them—and how to mitigate them—will save you time and misleading forecasts.</p>
+<h3 id="1-structural-breaks-and-regime-shifts">1) Structural breaks and regime shifts<a class="headerlink" href="#1-structural-breaks-and-regime-shifts" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Sudden level/variance changes, policy interventions, product launches, outages. Residual ACF shows leftover structure; parameters drift across time.</p>
+<p><strong>Why ARIMA struggles.</strong> It assumes fixed linear dynamics. Breaks violate stationarity and parameter constancy.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Detect/mark breaks (change-point tests, domain knowledge) and add <strong>intervention dummies</strong>.</li>
+<li>Fit on <strong>post-break</strong> segments or use <strong>rolling re-estimation</strong>.</li>
+<li>Consider <strong>regime-switching</strong> or time-varying parameter state-space models if shifts are frequent.</li>
+</ul>
+<h3 id="2-seasonality-and-calendar-effects">2) Seasonality and calendar effects<a class="headerlink" href="#2-seasonality-and-calendar-effects" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> ACF spikes at seasonal lags (e.g., 7, 24, 12), weekday/holiday patterns.</p>
+<p><strong>Why ARIMA struggles.</strong> Nonseasonal ARIMA can’t encode long-period cyclic dependence.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Use <strong>SARIMA</strong> (seasonal ARIMA) or deseasonalize via <strong>STL/Prophet-style decomposition</strong> and model the remainder.</li>
+<li>Add <strong>calendar regressors</strong> (dow, holiday flags) with ARIMA errors (ARIMAX).</li>
+</ul>
+<h3 id="3-heteroskedasticity-time-varying-volatility">3) Heteroskedasticity (time-varying volatility)<a class="headerlink" href="#3-heteroskedasticity-time-varying-volatility" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Residuals pass mean autocorrelation tests but <strong>squared residuals</strong> are autocorrelated; prediction intervals too narrow in volatile regimes.</p>
+<p><strong>Why ARIMA struggles.</strong> It models the conditional mean, not the variance.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Variance-stabilizing transforms (log, Box–Cox).</li>
+<li>Pair with <strong>GARCH</strong> (ARIMA-GARCH) or use robust/quantile methods for intervals.</li>
+</ul>
+<h3 id="4-nonlinearity-and-long-memory">4) Nonlinearity and long memory<a class="headerlink" href="#4-nonlinearity-and-long-memory" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Smooth trends, thresholds, saturations, persistence that decays very slowly (hyperbolic ACF).</p>
+<p><strong>Why ARIMA struggles.</strong> Linear, short-memory structure can’t capture nonlinear response or fractional integration.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Add nonlinear terms via <strong>exogenous regressors</strong> or switch to <strong>tree/NN</strong> models with temporal features.</li>
+<li>For long memory, consider <strong>ARFIMA</strong>.</li>
+</ul>
+<h3 id="5-outliers-and-heavy-tails">5) Outliers and heavy tails<a class="headerlink" href="#5-outliers-and-heavy-tails" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Spikes that dominate fit; residuals with fat tails; unstable parameters.</p>
+<p><strong>Why ARIMA struggles.</strong> MLE is sensitive to extremes; a few points can swing coefficients and BIC.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Winsorize/clean or model <strong>interventions</strong> explicitly.</li>
+<li>Use robust estimation or downweight outliers; validate with <strong>rolling OOS</strong> metrics.</li>
+</ul>
+<h3 id="6-missing-data-and-irregular-sampling">6) Missing data and irregular sampling<a class="headerlink" href="#6-missing-data-and-irregular-sampling" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Gaps, uneven time steps, duplicated timestamps.</p>
+<p><strong>Why ARIMA struggles.</strong> Standard estimation assumes a regular grid.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Impute to a <strong>regular cadence</strong> (carry-forward, interpolation, model-based) or use state-space Kalman filtering that tolerates missingness.</li>
+<li>Aggregate/disaggregate carefully; avoid mixing frequencies.</li>
+</ul>
+<h3 id="7-over-under-differencing">7) Over-/under-differencing<a class="headerlink" href="#7-over-under-differencing" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong></p>
+<ul>
+<li><strong>Under-differenced:</strong> residual ACF shows slow decay; unit-root tests reject stationarity.</li>
+<li><strong>Over-differenced:</strong> negative lag-1 ACF, overdamped dynamics, loss of signal.</li>
+</ul>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Use <strong>unit-root tests</strong> (ADF/PP/KPSS; see <em>Statistical Concepts</em> chapter) and inspect ACF/PACF on differenced series.</li>
+<li>Prefer the <strong>lowest differencing</strong> that yields stationarity; consider drift when <span class="arithmatex">\(d=1\)</span>.</li>
+</ul>
+<h3 id="8-near-nonstationarity-invertibility-unit-root-edges">8) Near nonstationarity / invertibility (unit-root edges)<a class="headerlink" href="#8-near-nonstationarity-invertibility-unit-root-edges" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> AR or MA roots close to the unit circle; large standard errors; convergence warnings.</p>
+<p><strong>Why ARIMA struggles.</strong> Likelihood surface is flat near boundary; estimates unstable.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Enforce <strong>stationarity/invertibility</strong> constraints during fitting (then relax if needed).</li>
+<li>Favor <strong>parsimonious</strong> models; re-test on rolling windows.</li>
+</ul>
+<h3 id="9-identifiability-and-multicollinearity-of-lags">9) Identifiability and multicollinearity of lags<a class="headerlink" href="#9-identifiability-and-multicollinearity-of-lags" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Many AR/MA terms but similar fit; inflated standard errors; BIC barely improves.</p>
+<p><strong>Why ARIMA struggles.</strong> Redundant lags create parameter collinearity.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Keep <span class="arithmatex">\(p,q\)</span> <strong>small</strong>; let <strong>BIC</strong> and <strong>OOS</strong> validation prune.</li>
+<li>Inspect ACF/PACF for <strong>minimal</strong> useful orders.</li>
+</ul>
+<h3 id="10-exogenous-drivers-omitted">10) Exogenous drivers omitted<a class="headerlink" href="#10-exogenous-drivers-omitted" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Forecasts miss systematic effects (price, weather, promotions); residuals correlate with known signals.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Use <strong>ARIMAX</strong> with relevant regressors and keep ARMA terms for the residual autocorrelation.</li>
+</ul>
+<h3 id="11-small-samples">11) Small samples<a class="headerlink" href="#11-small-samples" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Unstable estimates; diagnostics inconclusive.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Limit orders (e.g., <span class="arithmatex">\(p,q \le 2\)</span>), use <strong>BIC</strong> over AIC, and consider <strong>hierarchical pooling</strong> or simpler baselines.</li>
+</ul>
+<h3 id="12-long-horizon-forecasts">12) Long-horizon forecasts<a class="headerlink" href="#12-long-horizon-forecasts" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom.</strong> Intervals explode; mean reverts too fast/slow relative to reality.</p>
+<p><strong>Why ARIMA struggles.</strong> Uncertainty accumulates quickly in integrated processes.</p>
+<p><strong>What to do.</strong></p>
+<ul>
+<li>Communicate <strong>scenario ranges</strong>; refresh with <strong>rolling re-fits</strong>; blend with structural or causal models for long-term planning.</li>
+</ul>
+<hr />
+<h3 id="practical-caveats-tooling-diagnostics">Practical caveats (tooling &amp; diagnostics)<a class="headerlink" href="#practical-caveats-tooling-diagnostics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Convergence &amp; warnings.</strong> “Non-stationary AR starts” / “Non-invertible MA starts” are common; they usually trigger robust initialization. True <strong>non-convergence</strong> is a red flag—tighten constraints, reduce orders, or change optimizer settings.</li>
+<li><strong>Data leakage.</strong> Don’t tune on the full series and report naive test error. Use <strong>rolling-origin</strong> validation.</li>
+<li><strong>Multiple testing.</strong> Large grids inflate false positives. Penalize with <strong>BIC</strong>, and confirm with <strong>OOS</strong> metrics and residual diagnostics.</li>
+<li><strong>Diagnostics to rely on.</strong> ACF/PACF, <strong>Ljung–Box</strong> (mean, and squared residuals for volatility), unit-root tests, parameter stability, and coverage of prediction intervals. Detailed definitions and procedures live in the <em>Statistical Concepts</em> chapter.</li>
+</ul>
+<hr />
+<h3 id="how-autoarimaexplorer-mitigates-these-issues">How AutoArimaExplorer mitigates these issues<a class="headerlink" href="#how-autoarimaexplorer-mitigates-these-issues" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Guardrails:</strong> Convergence enforcement, <strong>finite-BIC</strong> checks, and <strong>Ljung–Box</strong> filters (mean ± optional squared).</li>
+<li><strong>Parsimony by default:</strong> BIC-driven selection, tie-breaks favoring lower <span class="arithmatex">\(p+q\)</span>.</li>
+<li><strong>Rolling OOS:</strong> Optional <strong>out-of-sample</strong> scoring (RMSE/MAE/MAPE or <strong>Winkler</strong> for interval calibration).</li>
+<li><strong>Flexible preprocessing:</strong> Work on <strong>log-returns</strong> for <span class="arithmatex">\(d=0\)</span> and <strong>standardized levels</strong> for <span class="arithmatex">\(d\ge 1\)</span>; easy to add calendar/exogenous features in downstream workflows.</li>
+</ul>
+<hr />
+<h2 id="practical-identification-heuristics-modeling-playbook">Practical identification heuristics (modeling playbook)<a class="headerlink" href="#practical-identification-heuristics-modeling-playbook" title="Permanent link">&para;</a></h2>
+<p>This is a pragmatic, battle-tested checklist you can follow before, during, and after running ARIMA. It blends classic Box–Jenkins rules with modern validation habits. Use it linearly the first time; later you’ll jump around.</p>
+<h3 id="0-sanity-checks-cleaning">0) Sanity checks &amp; cleaning<a class="headerlink" href="#0-sanity-checks-cleaning" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cadence:</strong> enforce a regular time step; resample if needed.</li>
+<li><strong>Missing:</strong> impute sensibly (interpolate short gaps, domain-aware fill for long gaps).</li>
+<li><strong>Outliers:</strong> flag large spikes; either explain (events) or winsorize/mark with dummies.</li>
+<li><strong>Scale/units:</strong> if the series is strictly positive and multiplicative, consider <strong>log</strong> (or Box–Cox).</li>
+</ul>
+<hr />
+<h3 id="1-first-look">1) First look<a class="headerlink" href="#1-first-look" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Plot levels and first differences; annotate obvious breaks/seasonality.</li>
+<li>Inspect a quick <strong>ACF/PACF</strong> of levels and of first differences.</li>
+<li>Compute rolling mean/variance to spot heteroskedasticity.</li>
+</ul>
+<hr />
+<h3 id="2-make-it-stationary-choose-d">2) Make it stationary (choose <span class="arithmatex">\(d\)</span>)<a class="headerlink" href="#2-make-it-stationary-choose-d" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If levels show slow persistence and ACF decays very slowly → <strong>difference once</strong> (<span class="arithmatex">\(d=1\)</span>).</li>
+<li>If still non-stationary (trend in mean), test again; rarely <span class="arithmatex">\(d=2\)</span> is justified.</li>
+<li><strong>Avoid over-differencing:</strong> if you see a strong negative lag-1 ACF in the differenced series, you likely went too far.</li>
+<li>If <span class="arithmatex">\(d=1\)</span>, consider allowing a <strong>drift</strong> (constant after differencing) unless domain knowledge says otherwise.</li>
+</ul>
+<blockquote>
+<p>Minimal differencing that achieves stationarity beats aggressive differencing.</p>
+</blockquote>
+<hr />
+<h3 id="3-seasonal-structure-if-applicable">3) Seasonal structure (if applicable)<a class="headerlink" href="#3-seasonal-structure-if-applicable" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ACF spikes at lag <span class="arithmatex">\(s\)</span> and multiples (e.g., 7, 12, 24) → consider <strong>seasonal differencing</strong> <span class="arithmatex">\(D=1\)</span> and a <strong>SARIMA</strong> (not covered in this chapter), or pre-deseasonalize with STL and model the remainder.</li>
+</ul>
+<hr />
+<h3 id="4-choose-small-candidate-orders-p-q">4) Choose small candidate orders (<span class="arithmatex">\(p, q\)</span>)<a class="headerlink" href="#4-choose-small-candidate-orders-p-q" title="Permanent link">&para;</a></h3>
+<p>Use the differenced (stationary) series’ ACF/PACF as a <strong>guide</strong>, not a law:</p>
+<ul>
+<li><strong>AR(<span class="arithmatex">\(p\)</span>) hint:</strong> PACF cuts off after <span class="arithmatex">\(p\)</span>; ACF tails off.</li>
+<li><strong>MA(<span class="arithmatex">\(q\)</span>) hint:</strong> ACF cuts off after <span class="arithmatex">\(q\)</span>; PACF tails off.</li>
+<li><strong>ARMA(<span class="arithmatex">\(p,q\)</span>) hint:</strong> both ACF and PACF tail off.</li>
+</ul>
+<p>Start with a <strong>small grid</strong>: <span class="arithmatex">\(p,q \in \{0,1,2\}\)</span>. Favor parsimony.</p>
+<hr />
+<h3 id="5-fit-compare-in-sample-guardrails">5) Fit &amp; compare (in-sample guardrails)<a class="headerlink" href="#5-fit-compare-in-sample-guardrails" title="Permanent link">&para;</a></h3>
+<p>For each candidate:</p>
+<ul>
+<li>Fit with constraints to enforce <strong>stationarity/invertibility</strong> (relax only if needed).</li>
+<li>
+<p>Check:</p>
+</li>
+<li>
+<p><strong>Convergence:</strong> must be true (don’t negotiate this).</p>
+</li>
+<li><strong>BIC:</strong> prefer the smallest; use AIC only for exploratory tie-breaks.</li>
+<li><strong>Residual diagnostics:</strong> Ljung–Box on residuals (no autocorrelation). Optionally test <strong>squared residuals</strong> to screen for short-range volatility (ARCH-like behavior).</li>
+</ul>
+<p><strong>Stopping rules (handy):</strong></p>
+<ul>
+<li>Only accept a more complex model if BIC drops by <strong>≥ 2</strong> (or your chosen threshold).</li>
+<li>If LB fails, <strong>discard</strong> regardless of BIC.</li>
+</ul>
+<hr />
+<h3 id="6-cross-validate-out-of-sample-reality-check">6) Cross-validate (out-of-sample reality check)<a class="headerlink" href="#6-cross-validate-out-of-sample-reality-check" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Run <strong>rolling-origin</strong> evaluation with a short horizon (e.g., 1–5 steps).</li>
+<li>Score with <strong>RMSE/MAE/MAPE</strong>; for interval quality use the <strong>Winkler score</strong>.</li>
+<li>Prefer the model that is competitive on BIC <strong>and</strong> clearly best OOS. If BIC and OOS disagree, trust <strong>OOS</strong>.</li>
+</ul>
+<hr />
+<h3 id="7-volatility-intervals">7) Volatility &amp; intervals<a class="headerlink" href="#7-volatility-intervals" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If residuals pass LB but <strong>squared residuals</strong> fail LB → variance is time-varying.</li>
+<li>Expect under-covered prediction intervals; consider variance-stabilizing transforms (log/Box–Cox) or pairing with <strong>GARCH</strong> for volatility.</li>
+</ul>
+<hr />
+<h3 id="8-edgeboundary-situations">8) Edge/boundary situations<a class="headerlink" href="#8-edgeboundary-situations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Near-unit roots:</strong> parameters unstable, big SEs, optimizer warnings. Prefer simpler <span class="arithmatex">\(p,q\)</span>; re-estimate on rolling windows.</li>
+<li><strong>Identifiability:</strong> if adding lags barely improves BIC and parameters are wobbly, prune back.</li>
+</ul>
+<hr />
+<h3 id="9-checklist-for-good-arima">9) Checklist for “good” ARIMA<a class="headerlink" href="#9-checklist-for-good-arima" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Converged fit ✔</li>
+<li>Smallest (or near-smallest) <strong>BIC</strong> among parsimonious candidates ✔</li>
+<li>Residual <strong>Ljung–Box</strong> (mean) passes at multiple lags ✔</li>
+<li>(Optional) <strong>LB on squared residuals</strong> passes for short-range lags ✔</li>
+<li>Reasonable, stable coefficients (no wild standard errors) ✔</li>
+<li><strong>Rolling OOS</strong> error competitive or best ✔</li>
+<li>Intervals with plausible coverage ✔</li>
+</ul>
+<hr />
+<h3 id="a-tiny-acfpacf-cheat-sheet">A tiny ACF/PACF cheat-sheet<a class="headerlink" href="#a-tiny-acfpacf-cheat-sheet" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AR(1):</strong> PACF spike at lag 1 then \~0; ACF decays geometrically.</li>
+<li><strong>MA(1):</strong> ACF spike at lag 1 then \~0; PACF decays geometrically.</li>
+<li><strong>ARMA(1,1):</strong> Both ACF and PACF decay (no sharp cut-off).</li>
+<li><strong>Over-differenced:</strong> strong negative ACF at lag 1.</li>
+</ul>
+<hr />
+<h3 id="what-this-looks-like-in-practice-with-autoarimaexplorer">What this looks like in practice with AutoArimaExplorer<a class="headerlink" href="#what-this-looks-like-in-practice-with-autoarimaexplorer" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use <strong><code>fit_grid</code></strong> on a small, sensible grid; force <strong><code>require_converged=True</code></strong>.</li>
+<li>Select with <strong><code>select_best_by_bic</code></strong> (enable LB guardrail; optionally <code>check_sq=True</code>).</li>
+<li>Cross-check with <strong><code>select_by_oos</code></strong> (rolling origin) on the finalists.</li>
+<li>If LB on squared residuals fails repeatedly, consider a transform or volatility model.</li>
+<li>Keep models <strong>simple</strong> unless there is clear BIC <strong>and</strong> OOS justification.</li>
+</ul>
+<blockquote>
+<p>Rule of thumb: if a model is only microscopically better in-sample but worse OOS or fails diagnostics, it’s not better.</p>
+</blockquote>
+<hr />
+<h2 id="extensions-you-should-know">Extensions you should know<a class="headerlink" href="#extensions-you-should-know" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>SARIMA <span class="arithmatex">\((p,d,q)\times(P,D,Q)_s\)</span>:</strong> seasonal ARIMA with seasonal difference <span class="arithmatex">\(D\)</span> and seasonal period <span class="arithmatex">\(s\)</span>.</li>
+<li><strong>ARIMAX / SARIMAX:</strong> add exogenous regressors <span class="arithmatex">\(X_t\)</span> to capture calendar, promotions, weather, etc.</li>
+<li><strong>State-space / Kalman:</strong> ARIMA recast; enables missing data handling, time-varying parameters, and smoother-based diagnostics.</li>
+<li><strong>ARFIMA:</strong> fractional differencing to model long memory.</li>
+<li><strong>Regime-switching ARIMA:</strong> different parameter sets by latent regime.</li>
+</ul>
+<hr />
+<h2 id="troubleshooting-checklist">Troubleshooting checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Residual ACF significant at short lags?</strong> Increase <span class="arithmatex">\(p\)</span> or <span class="arithmatex">\(q\)</span> (not both at once), or reconsider differencing.</li>
+<li><strong>Large negative MA estimates near −1 with <span class="arithmatex">\(d=1\)</span>?</strong> Potential over-differencing.</li>
+<li><strong>Non-invertible MA or non-stationary AR warnings?</strong> Re-specify orders; enforce constraints during estimation.</li>
+<li><strong>Prediction intervals too narrow/wide?</strong> Suspect heteroskedasticity; consider GARCH or robust intervals.</li>
+<li><strong>Seasonal spikes in ACF/PACF?</strong> Add seasonal difference <span class="arithmatex">\(D=1\)</span> and seasonal AR/MA terms.</li>
+<li><strong>Sudden fit degradation?</strong> Look for breaks; add interventions or refit on a rolling window.</li>
+</ul>
+<hr />
+<h2 id="how-this-theory-guides-autoarimaexplorer">How this theory guides AutoArimaExplorer<a class="headerlink" href="#how-this-theory-guides-autoarimaexplorer" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Uses <strong>standardized levels</strong> for <span class="arithmatex">\(d\ge 1\)</span> and <strong>log-returns</strong> for <span class="arithmatex">\(d=0\)</span> to respect stationarity assumptions.</li>
+<li>Attempts multiple <strong>estimation trials</strong> (trend and constraint variants) and only keeps <strong>converged, finite-BIC</strong> fits.</li>
+<li>Provides <strong>guardrails</strong> (Ljung–Box on residuals and optionally on squared residuals).</li>
+<li>Offers three <strong>selection lenses</strong>: overall <strong>Best-by-BIC</strong>, per-<span class="arithmatex">\((d,q)\)</span> <strong>Best-by-q</strong> (parsimonious stepwise path), and <strong>Best-by-OOS</strong> via rolling validation (RMSE/MAE/MAPE or Winkler for interval calibration).</li>
+</ul>
+<p>Use ARIMA when you need interpretable, fast, and competitive short-horizon forecasts—and lean on diagnostics and OOS checks to keep yourself honest.</p>
+<hr />
+<h2 id="where-the-stats-live-and-what-to-read-next">Where the stats live (and what to read next)<a class="headerlink" href="#where-the-stats-live-and-what-to-read-next" title="Permanent link">&para;</a></h2>
+<p>This chapter focuses on <strong>what ARIMA is and when it works</strong>. The statistical machinery we rely on—tests, estimators, diagnostics, and selection criteria—is treated in depth in the companion chapter <strong><a href="../statistical_conceps/">Statistical Concepts</a></strong>. If you want the math behind each knob we turn in AutoArimaExplorer, read that next. Specifically, it covers:</p>
+<ul>
+<li><strong>Stationarity &amp; unit roots:</strong> ADF, KPSS, and the practical meaning of <span class="arithmatex">\(d\)</span>.</li>
+<li><strong>Correlation structure:</strong> ACF/PACF definitions, sample estimators, and sampling variability.</li>
+<li><strong>Model adequacy tests:</strong> Ljung–Box on residuals and on squared residuals (ARCH check).</li>
+<li><strong>Information criteria:</strong> AIC, AICc, BIC—derivations, penalties, and when each is preferable.</li>
+<li><strong>Estimation details:</strong> MLE for ARIMA, state-space likelihood, constraints (stationarity/invertibility).</li>
+<li><strong>Forecast uncertainty:</strong> prediction vs. confidence intervals; what assumptions underpin them.</li>
+<li><strong>Error metrics:</strong> RMSE/MAE/MAPE, coverage and <strong>Winkler score</strong> for prediction intervals.</li>
+<li><strong>Transformations &amp; scaling:</strong> log/Box–Cox, standardization, and their impact on inference.</li>
+<li><strong>Model selection trade-offs:</strong> parsimony, overfitting, bias–variance, and tie-breaking rules.</li>
+</ul>
+<p>Use this ARIMA chapter for the modeling storyline; use <em>Statistical Concepts</em> when you want the proofs, formulas, and the fine print behind each diagnostic and selection choice.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
