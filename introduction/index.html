@@ -1,0 +1,820 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>Introduction - AutoArimaExplorer Book</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-theoretical-fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AutoArimaExplorer Book" class="md-header__button md-logo" aria-label="AutoArimaExplorer Book" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AutoArimaExplorer Book
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AutoArimaExplorer Book" class="md-nav__button md-logo" aria-label="AutoArimaExplorer Book" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AutoArimaExplorer Book
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Theory
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Theory
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teoria/introduccion.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teoria/arima_fundamentos.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentos ARIMA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teoria/diagnosticos.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagnósticos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical conceps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical conceps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tecnica/autoarimaexplorer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    General view
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tecnica/api.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API (auto)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tecnica/ejemplos.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-theoretical-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction — Theoretical Fundamentals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction — Theoretical Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-modeling-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) The modeling goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-arima-models-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) ARIMA models at a glance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-stationarity-differencing-and-trend" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Stationarity, differencing, and trend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-identification-and-parsimony" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Identification and parsimony
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-residual-diagnostics-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Residual diagnostics (guardrails)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-convergence-and-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Convergence and stability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-how-much-data-do-we-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) How much data do we need?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-out-of-sample-oos-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Out-of-sample (OOS) validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-prediction-intervals-pis-and-winkler-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Prediction intervals (PIs) and Winkler score
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-when-arima-isnt-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      10) When ARIMA isn’t enough
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-notation-used-throughout" class="md-nav__link">
+    <span class="md-ellipsis">
+      11) Notation used throughout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-how-this-theory-informs-autoarimaexplorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) How this theory informs AutoArimaExplorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Introduction</h1>
+
+<h2 id="introduction-theoretical-fundamentals">Introduction — Theoretical Fundamentals<a class="headerlink" href="#introduction-theoretical-fundamentals" title="Permanent link">&para;</a></h2>
+<p>This chapter lays the theoretical groundwork that underpins <strong>AutoArimaExplorer</strong>. It focuses on why we model, what ARIMA models are, how we select/diagnose them, and how we evaluate forecasts—especially under the practical constraints typical of financial time series (short memory, heavy tails, and time‐varying volatility).</p>
+<hr />
+<h3 id="1-the-modeling-goal">1) The modeling goal<a class="headerlink" href="#1-the-modeling-goal" title="Permanent link">&para;</a></h3>
+<p>Given a univariate time series ${y_t}_{t=1}^T$, we want to:</p>
+<ol>
+<li><strong>Explain</strong> short-run serial dependence parsimoniously.</li>
+<li><strong>Forecast</strong> $y_{T+h}$ (and uncertainty around it) with stable, out-of-sample performance.</li>
+<li><strong>Diagnose</strong> whether remaining structure in the residuals violates standard modeling assumptions (e.g., autocorrelation).</li>
+</ol>
+<p>AutoArimaExplorer automates this pipeline with robust fitting strategies, information-criterion selection, residual diagnostics, and rolling-origin validation.</p>
+<hr />
+<h3 id="2-arima-models-at-a-glance">2) ARIMA models at a glance<a class="headerlink" href="#2-arima-models-at-a-glance" title="Permanent link">&para;</a></h3>
+<p>An <strong>ARIMA(p, d, q)</strong> model applies $d$ differences to make the series “close enough” to stationary, then fits an ARMA(p, q) to the differenced series.</p>
+<ul>
+<li><strong>Differencing</strong>:</li>
+</ul>
+<p>$$
+  \Delta^d y_t = (1 - B)^d y_t
+  $$</p>
+<p>where $B$ is the backshift operator, $By_t = y_{t-1}$.</p>
+<ul>
+<li><strong>ARMA(p, q)</strong> on $x_t = \Delta^d y_t$:</li>
+</ul>
+<p>$$
+  \phi(B)\, x_t = \theta(B)\, \varepsilon_t,\quad \varepsilon_t \sim \text{i.i.d. }(0, \sigma^2)
+  $$</p>
+<p>with $\phi(B) = 1 - \phi_1B - \dots - \phi_p B^p$ and $\theta(B) = 1 + \theta_1B + \dots + \theta_q B^q$.</p>
+<p><strong>Interpretation</strong></p>
+<ul>
+<li>$p$: autoregressive memory (how many past values of $x_t$ matter).</li>
+<li>$d$: differencing order (how much trend we remove).</li>
+<li>$q$: moving-average memory (how many past shocks matter).</li>
+</ul>
+<p><strong>Practical note in finance</strong>
+Prices are often modeled via <strong>log-returns</strong> (already close to stationary), for which $d=0$ is common; levels may require $d\ge 1$.</p>
+<hr />
+<h3 id="3-stationarity-differencing-and-trend">3) Stationarity, differencing, and trend<a class="headerlink" href="#3-stationarity-differencing-and-trend" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Weak stationarity</strong> (constant mean/variance, ACF depends only on lag) is a working assumption for ARMA modeling.</li>
+<li><strong>Differencing</strong> helps when trends or unit roots are present. Over-differencing injects moving-average structure and can inflate forecast variance.</li>
+<li>
+<p><strong>Trend terms</strong>: In integrated models, trend terms of order lower than $d$ are redundant (e.g., a constant is eliminated by first differencing). AutoArimaExplorer enforces sensible trend choices by $d$:</p>
+</li>
+<li>
+<p>$d=0$: allow constant (“c”) or no constant (“n”).</p>
+</li>
+<li>$d=1$: allow drift (“t”) or none (“n”).</li>
+<li>$d\ge 2$: no explicit trend (lower-order trends are differenced out).</li>
+</ul>
+<hr />
+<h3 id="4-identification-and-parsimony">4) Identification and parsimony<a class="headerlink" href="#4-identification-and-parsimony" title="Permanent link">&para;</a></h3>
+<p>Classical Box–Jenkins identification uses the <strong>ACF/PACF</strong> to suggest $p, q$, but automated search commonly relies on <strong>information criteria</strong>:</p>
+<ul>
+<li><strong>BIC (Bayesian Information Criterion)</strong>:</li>
+</ul>
+<p>$$
+  \text{BIC} = -2\log L + k \log T
+  $$</p>
+<p>with $k$ number of estimated parameters; <strong>smaller is better</strong>.
+  BIC penalizes complexity more strongly than AIC, encouraging parsimonious models that typically forecast more robustly in practice.</p>
+<p>AutoArimaExplorer:</p>
+<ul>
+<li>Fits a grid of $(p,d,q)$ with robust optimizers and constraints toggled.</li>
+<li>Selects by <strong>minimum BIC</strong>, optionally breaking ties by parsimony (smaller $p+q$).</li>
+</ul>
+<hr />
+<h3 id="5-residual-diagnostics-guardrails">5) Residual diagnostics (guardrails)<a class="headerlink" href="#5-residual-diagnostics-guardrails" title="Permanent link">&para;</a></h3>
+<p>A fitted model should leave <strong>white-noise residuals</strong>:</p>
+<ul>
+<li><strong>No linear autocorrelation</strong> in $\varepsilon_t$.</li>
+<li>(Often in finance) Variance can be time-varying; ARIMA won’t fix conditional heteroskedasticity.</li>
+</ul>
+<p>We use <strong>Ljung–Box</strong> tests as guardrails:</p>
+<ul>
+<li>On residuals $\varepsilon_t$ → checks leftover linear dependence.</li>
+<li>Optionally on <strong>squared residuals</strong> $\varepsilon_t^2$ → crude check for short-run volatility clustering (ARCH-type effects).</li>
+</ul>
+<p>Decision rule: <strong>fail</strong> (reject white noise) if any p-value at selected lags is below $\alpha$. Models that fail can be <strong>filtered out</strong> during selection.</p>
+<hr />
+<h3 id="6-convergence-and-stability">6) Convergence and stability<a class="headerlink" href="#6-convergence-and-stability" title="Permanent link">&para;</a></h3>
+<p>Likelihood-based ARIMA fitting can struggle when:</p>
+<ul>
+<li>Roots are near the unit circle (non-stationary/invertible starts).</li>
+<li>The likelihood surface is flat or multi-modal.</li>
+<li>The sample is short relative to $p+q+d$.</li>
+</ul>
+<p>AutoArimaExplorer mitigates this by:</p>
+<ul>
+<li>
+<p>Trying <strong>multiple estimation strategies</strong> per candidate:</p>
+</li>
+<li>
+<p>For $d=0$, <strong>innovations MLE</strong> (fast, stable) and state-space with L-BFGS.</p>
+</li>
+<li>For $d\ge 1$, state-space fits with/without stationarity/invertibility enforcement.</li>
+<li>Discarding pathological fits (non-finite BIC).</li>
+<li>Optionally <strong>requiring convergence</strong>.</li>
+</ul>
+<hr />
+<h3 id="7-how-much-data-do-we-need">7) How much data do we need?<a class="headerlink" href="#7-how-much-data-do-we-need" title="Permanent link">&para;</a></h3>
+<p>A pragmatic heuristic (Box–Jenkins-style):</p>
+<p>$$
+T - d \;\ge\; \max\big( \text{base},\; \text{per_param}\cdot(p+q+d+1)\big),
+$$</p>
+<p>with typical defaults like <strong>base = 50</strong>, <strong>per_param = 10</strong>.
+This avoids overfitting high-order models on very short samples.</p>
+<hr />
+<h3 id="8-out-of-sample-oos-validation">8) Out-of-sample (OOS) validation<a class="headerlink" href="#8-out-of-sample-oos-validation" title="Permanent link">&para;</a></h3>
+<p>In-sample fit is not enough. We assess <strong>forecast performance</strong> via <strong>rolling-origin</strong> validation:</p>
+<ol>
+<li>Choose a minimal training window.</li>
+<li>For each fold $t$: fit on $[1..t]$, forecast $h$ steps ahead, compare to actuals.</li>
+<li>Aggregate errors across folds.</li>
+</ol>
+<p><strong>Metrics</strong></p>
+<ul>
+<li><strong>RMSE</strong>: root mean squared error (penalizes large misses).</li>
+<li><strong>MAE</strong>: mean absolute error (robust to outliers vs RMSE).</li>
+<li><strong>MAPE</strong>: mean absolute percentage error (scale-free; beware near zero).</li>
+<li><strong>Winkler score</strong> (for prediction intervals): balances <strong>interval width</strong> and <strong>coverage</strong>; <strong>lower is better</strong>.</li>
+</ul>
+<p>AutoArimaExplorer can select the model with <strong>lowest OOS score</strong>, complementing BIC-based selection.</p>
+<hr />
+<h3 id="9-prediction-intervals-pis-and-winkler-score">9) Prediction intervals (PIs) and Winkler score<a class="headerlink" href="#9-prediction-intervals-pis-and-winkler-score" title="Permanent link">&para;</a></h3>
+<p>For a nominal level $1-\alpha$ (e.g., 95%), a PI $[L_t, U_t]$ should contain the realization with probability $1-\alpha$.
+The <strong>Winkler score</strong> penalizes both <strong>width</strong> and <strong>misses</strong>:</p>
+<p>$$
+W =
+\begin{cases}
+U - L, &amp; \text{if } y \in [L, U] \
+(U - L) + \tfrac{2}{\alpha}(L - y), &amp; \text{if } y &lt; L \
+(U - L) + \tfrac{2}{\alpha}(y - U), &amp; \text{if } y &gt; U \
+\end{cases}
+$$</p>
+<p>Averaging $W$ across folds gives a scalar measure of <strong>sharpness + calibration</strong>.</p>
+<hr />
+<h3 id="10-when-arima-isnt-enough">10) When ARIMA isn’t enough<a class="headerlink" href="#10-when-arima-isnt-enough" title="Permanent link">&para;</a></h3>
+<p>ARIMA captures <strong>linear</strong> serial dependence in the mean. It does <strong>not</strong> model:</p>
+<ul>
+<li><strong>Conditional heteroskedasticity</strong> (GARCH-type effects).</li>
+<li><strong>Nonlinear dynamics</strong> (thresholds, regime switches).</li>
+<li><strong>Seasonality</strong> (unless explicitly modeled via SARIMA).</li>
+</ul>
+<p>If Ljung–Box on squared residuals fails or volatility clustering is clear, consider <strong>ARIMA + GARCH</strong>, or robust forecasting of returns with a separate volatility model.</p>
+<hr />
+<h3 id="11-notation-used-throughout">11) Notation used throughout<a class="headerlink" href="#11-notation-used-throughout" title="Permanent link">&para;</a></h3>
+<ul>
+<li>$y_t$: original series (levels or log-levels).</li>
+<li>$x_t = \Delta^d y_t$: differenced (working) series.</li>
+<li>$p, d, q$: AR, integration, MA orders.</li>
+<li>$\varepsilon_t$: one-step-ahead residuals/innovations.</li>
+<li>$h$: forecast horizon; $T$: sample size.</li>
+</ul>
+<hr />
+<h3 id="12-how-this-theory-informs-autoarimaexplorer">12) How this theory informs AutoArimaExplorer<a class="headerlink" href="#12-how-this-theory-informs-autoarimaexplorer" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Robust fitting</strong> across trends/constraints reflects stationarity/invertibility and estimation stability concerns.</li>
+<li><strong>BIC-first selection</strong> embodies parsimony; <strong>Ljung–Box guardrails</strong> enforce whiteness.</li>
+<li><strong>Rolling OOS</strong> closes the loop on predictive validity.</li>
+<li><strong>Data sufficiency checks</strong> avoid overfitting with short samples.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>
