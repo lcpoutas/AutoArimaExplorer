@@ -1,16 +1,18 @@
 site_name: AutoArimaExplorer Book
 theme:
   name: material
+
 nav:
   - Home: index.md
   - Theory:
-    - Introducción: teoria/introduccion.md
-    - Fundamentos ARIMA: teoria/arima_fundamentos.md
-    - Diagnósticos: teoria/diagnosticos.md
+    - Introduction: theory/introduction.md
+    - ARIMA Fundamentals: theory/arima.md
+    - Diagnosis: theory/statistical_conceps.md
   - Technical conceps:
-    - General view: tecnica/autoarimaexplorer.md
-    - API (auto): tecnica/api.md
-    - Examples: tecnica/ejemplos.md
+    - General view: technical_conceps/autoarimaexplorer.md
+    - API (auto): technical_conceps/api.md
+    - Examples: technical_conceps/examples.md
+
 plugins:
   - search
   - mkdocstrings:
@@ -19,8 +21,16 @@ plugins:
           options:
             docstring_style: google
             show_source: true
+
 markdown_extensions:
   - admonition
   - codehilite
   - toc:
       permalink: true
+  - pymdownx.arithmatex:
+      generic: true    # <- importante para que funcionen $...$ y $$...$$
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
